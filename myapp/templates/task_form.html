@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% load static %}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Create Task</h1>
+    <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="title" class="form-label">Title:</label>
+            <input type="text" id="title" name="title" class="form-control" required>
+            <div class="invalid-feedback">
+                Please provide a task title.
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <textarea id="description" name="description" class="form-control" rows="3">{{ task.description|default_if_none:'' }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="due_date" class="form-label">Due Date:</label>
+            <input type="datetime-local" id="due_date" name="due_date" class="form-control" required>
+            <div class="invalid-feedback">
+                Please select a due date.
+            </div>
+        </div>
+
+        <div class="form-check mb-3">
+            <input type="checkbox" id="is_complete" name="is_complete" class="form-check-input" {% if task.is_complete %}checked{% endif %}>
+            <label for="is_complete" class="form-check-label">Completed:</label>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Create Task</button>
+        <a href="{% url 'task_list' %}" class="btn btn-secondary">Back to Task List</a>
+    </form>
+</div>
+
+{% endblock %}

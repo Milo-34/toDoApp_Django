@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static '/css/style.css' %}">
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Task Details</h1>
+        <div class="card">
+            <div class="card-header text-white {% if task.is_complete %}bg-success{% else %}bg-secondary{% endif %}">
+                {{ task.title }}
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Description</h5>
+                <p class="card-text">{{ task.description }}</p>
+
+                <h5 class="card-title">Created At</h5>
+                <p class="card-text">{{ task.created_at }}</p>
+
+                <h5 class="card-title">Due Date</h5>
+                <p class="card-text">{{ task.due_date }}</p>
+
+                <h5 class="card-title">Status</h5>
+                <p class="card-text">
+                    {% if task.is_complete %}
+                    <span class="badge bg-success">Completed</span>
+                    {% else %}
+                    <span class="badge bg-secondary">Not Completed</span>
+                    {% endif %}
+                </p>
+            </div>
+            <div class="card-footer text-center">
+                <a href="{% url 'task_edit' task.id %}" class="btn btn-primary">Edit Task</a>
+                <a href="{% url 'task_delete' task.id %}" class="btn btn-danger">Delete Task</a>
+                <a href="{% url 'task_list' %}" class="btn btn-secondary">Back to Task List</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
